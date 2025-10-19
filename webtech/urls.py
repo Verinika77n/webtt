@@ -17,14 +17,25 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from guestbook.views_api import EntryViewSet
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+router = DefaultRouter(); router.register(r'entries', EntryViewSet, basename='entry')
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),  # login, logout, password_change, etc.
-    path('', include('guestbook.urls')),
+  path('admin/', admin.site.urls),
+  path('accounts/', include('django.contrib.auth.urls')),
+  path('api/', include(router.urls)),
+  path('', include('guestbook.urls')),
+  path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+  path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
+
+
+
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
