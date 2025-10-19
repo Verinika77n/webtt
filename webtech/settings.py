@@ -132,3 +132,8 @@ LOGIN_REDIRECT_URL = 'guestbook'   # куда попадёт пользоват�
 LOGOUT_REDIRECT_URL = 'guestbook'  # куда вернуть после логаута
 LOGIN_URL = 'login'                # имя URL для страницы логина (по умолчанию 'login')
 
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'

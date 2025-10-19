@@ -1,21 +1,13 @@
 from django.db import models
-
-# Create your models here.
-from django.db import models
 from django.conf import settings
-from django.db import models
 
 class Entry(models.Model):
     name = models.CharField('Имя', max_length=50)
     message = models.TextField('Сообщение', max_length=500)
     created_at = models.DateTimeField('Создано', auto_now_add=True)
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='entries',
-        null=True, blank=True,
-        verbose_name='Автор'
-    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+                             related_name='entries', null=True, blank=True, verbose_name='Автор')
+    image = models.ImageField('Изображение', upload_to='entries/', null=True, blank=True)
 
     class Meta:
         ordering = ['-created_at']
